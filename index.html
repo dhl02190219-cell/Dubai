@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>두쫀쿠 제과제빵학원</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ['Gaegu', 'cursive'],
+              body: ['Noto Sans KR', 'sans-serif'],
+            },
+            colors: {
+              'oven-cream': '#FFF8E7',
+              'oven-brown': '#8B4513',
+              'oven-light-brown': '#D2691E',
+              'oven-pink': '#FFB6C1',
+              'oven-accent': '#FF69B4',
+              'oven-pistachio': '#93C572', // Jjon
+              'oven-kataifi': '#E3D5B8',  // Ku (Baked Kataifi/Ivory-ish)
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      body {
+        background-color: #FFF8E7;
+      }
+      /* Custom scrollbar for webkit */
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #FFF8E7;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #D2691E;
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #8B4513;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.563.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "react": "https://esm.sh/react@^19.2.4"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
