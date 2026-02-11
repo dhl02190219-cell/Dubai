@@ -1,34 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Character } from '../types';
-import { Heart, Brain, MessageCircle, User } from 'lucide-react';
+import { Heart, Brain, MessageCircle, ChevronDown, ChevronUp } from 'lucide-react';
 
 interface CharacterCardProps {
   character: Character;
 }
 
 const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div className="w-full bg-white rounded-3xl overflow-hidden shadow-xl border-2 border-oven-cream hover:border-oven-pistachio transition-colors flex flex-col md:flex-row">
       
-      {/* Image Section - 1:1 Aspect Ratio on Desktop determined by height of content */}
-      <div className="w-full md:w-auto md:min-w-[400px] md:max-w-[500px] relative self-stretch">
-        <div className="w-full h-full md:aspect-square relative">
+      {/* Image Section - Clickable on mobile */}
+      <div 
+        className="w-full md:w-auto md:min-w-[400px] md:max-w-[500px] relative self-stretch cursor-pointer md:cursor-default group"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <div className="w-full aspect-square md:h-full relative">
              <img 
               src={character.image} 
               alt={character.name} 
-              className="w-full h-full object-cover absolute inset-0" 
+              className="w-full h-full object-cover absolute inset-0 transition-transform duration-700 group-hover:scale-105 md:group-hover:scale-100" 
             />
-            {/* Mobile Title Overlay */}
-            <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/60 to-transparent p-4 md:hidden">
-              <h2 className="text-2xl font-heading text-white font-bold">{character.name}</h2>
-              <p className="text-white/90 text-sm">{character.role}</p>
+            {/* Mobile Title Overlay - Always visible on mobile */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent md:hidden flex flex-col justify-end p-6">
+              <div className="transform transition-transform">
+                <h2 className="text-3xl font-heading text-white font-bold mb-2 drop-shadow-[0_2px_2px_rgba(0,0,0,0.8)]">
+                  {character.name}
+                </h2>
+                <div className="flex items-center justify-between">
+                   <div className="flex items-center gap-2">
+                     <span className={`${character.color} text-white px-2 py-0.5 rounded text-xs font-bold uppercase`}>
+                        {character.psychology.mbti}
+                      </span>
+                     <p className="text-white/90 text-sm font-medium drop-shadow-md">{character.role}</p>
+                   </div>
+                   <div className={`bg-white/20 p-2 rounded-full backdrop-blur-sm border border-white/30 transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}>
+                      <ChevronDown className="text-white w-5 h-5" />
+                   </div>
+                </div>
+                {!isExpanded && (
+                  <p className="text-white/60 text-xs mt-2 text-center animate-pulse">터치하여 상세 정보 보기</p>
+                )}
+              </div>
             </div>
         </div>
       </div>
 
-      {/* Content Section */}
-      <div className="flex-1 p-6 md:p-10 flex flex-col justify-center">
-        {/* Header */}
+      {/* Content Section - Accordion style on mobile */}
+      <div className={`flex-1 bg-white flex flex-col justify-center transition-all duration-500 ease-in-out md:flex md:max-h-none md:opacity-100 md:p-10 md:overflow-visible
+        ${isExpanded ? 'max-h-[2000px] opacity-100 p-6' : 'max-h-0 opacity-0 p-0 overflow-hidden'}
+      `}>
+        {/* Header - Desktop */}
         <div className="hidden md:flex justify-between items-start mb-6">
           <div>
             <h2 className="text-4xl font-heading text-oven-brown font-bold mb-1">{character.name}</h2>
@@ -45,13 +69,13 @@ const CharacterCard: React.FC<CharacterCardProps> = ({ character }) => {
         {/* Info Grid */}
         <div className="space-y-6">
           
-          {/* Mobile Info Header */}
+          {/* Mobile Info Header - Only need age here as Name/MBTI/Role are on image */}
           <div className="md:hidden mb-4 flex gap-2">
-             <span className={`${character.color} text-white px-3 py-1 rounded-full text-xs font-bold uppercase`}>
-                  MBTI: {character.psychology.mbti}
-            </span>
             <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold">
               {character.age}
+            </span>
+             <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs font-bold">
+              {character.engName}
             </span>
           </div>
 
